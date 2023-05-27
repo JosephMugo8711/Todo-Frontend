@@ -161,7 +161,7 @@ class TodosContainer extends Component  {
                     </label>   
                     <input
                     id="taskName"
-                    className="p-2 ml-4 border border-gray-400"
+                    className="p-2 ml-4 border border-gray-400 w-64"
                     type="text"
                     placeholder="Task name"
                     maxLength="50"
@@ -175,32 +175,35 @@ class TodosContainer extends Component  {
                     </label>
                     <input
                     id="taskDescription"
-                    className="p-2 ml-4 border border-gray-400"
+                    className="p-2 ml-4 border border-gray-400  w-80"
                     type="text"
                     placeholder="Task description"
-                    maxLength="50"
+                    maxLength="100"
                     value={this.state.descriptionValue}
                     onChange={this.handleDescriptionChange}
                     />
                 </div>
-                <label className='mr-10'>
+                <label className='ml-10'>
                     <input type="checkbox"  />
                     Completed
                 </label>
-                <button type="submit" className='mr-10' onClick={this.createTodo}>
+                <button 
+                    type="submit" 
+                    className="bg-blue-500 text-white py-2 px-4 rounded ml-10" 
+                    onClick={this.createTodo}>
                     +
                 </button>
             </div>
             <div className="listWrapper">
-          <ul className="taskList">
-            {this.state.todos.map((todo) => {
-              return (
-                <li className="" todo={todo} key={todo.id}>
-                  <input
-                    type="checkbox"
-                    checked={todo.done}
-                    onChange={(e) => this.updateTodo(e, todo.id)}
-                  />
+                <ul className="taskList">
+                   {this.state.todos.map((todo) => {
+                        return (
+                            <li className="" todo={todo} key={todo.id}>
+                            <input
+                                type="checkbox"
+                                checked={todo.done}
+                                onChange={(e) => this.updateTodo(e, todo.id)}
+                            />
                   {this.state.editingTodoId === todo.id ? (
                     <div>
                       <input
