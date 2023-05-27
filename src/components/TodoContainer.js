@@ -17,6 +17,10 @@ class TodosContainer extends Component  {
         .catch(error => console.log(error))
     }
 
+    componentDidMount(){
+        this.getTodos()
+    }
+
 
 
     render() {
