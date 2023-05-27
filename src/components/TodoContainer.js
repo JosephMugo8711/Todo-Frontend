@@ -5,7 +5,9 @@ class TodosContainer extends Component  {
     constructor(props) {
         super(props)
         this.state = {
-            todos: []
+            todos: [],
+            inputValue: '',
+            descriptionValue: '',
         }
     }
 
@@ -20,6 +22,37 @@ class TodosContainer extends Component  {
     componentDidMount(){
         this.getTodos()
     }
+
+    createTodo = (e) => {
+        e.preventDefault();
+        const {inputValue, descriptionValue} = this.state;
+        
+        if (!inputValue.trim()){
+            alert('Task name cannot be empty');
+            return;
+        }
+
+        const newTodo = {
+            name: inputValue,
+            description: descriptionValue,
+            completed: false,
+        };
+
+        axios.post('/todos', newTodo)
+        .then((res) => {
+            const createdTodo = res.data;
+            const updatedTodo = [createdTodo, ...this.state.todos];
+            this.setState({
+                todos: updatedTodos,
+                inputValue: '',
+                descriptionValue: '',
+            });
+        })
+        .catch((error) => console.log(error));
+        
+    };
+
+    
 
 
 
@@ -45,6 +78,7 @@ class TodosContainer extends Component  {
                                 <li className='' todo={todo} key={todo.id}>
                                     <input  type="checkbox"/>
                                     <label>{todo.name}</label>
+                                    <label>{todo.description}</label>
                                     <span>X</span>
 
                                 </li>
