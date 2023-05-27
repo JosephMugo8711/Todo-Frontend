@@ -194,57 +194,72 @@ class TodosContainer extends Component  {
                     +
                 </button>
             </div>
-            <div className="listWrapper">
-                <ul className="taskList">
-                   {this.state.todos.map((todo) => {
-                        return (
-                            <li className="" todo={todo} key={todo.id}>
-                            <input
-                                type="checkbox"
-                                checked={todo.done}
-                                onChange={(e) => this.updateTodo(e, todo.id)}
-                            />
-                  {this.state.editingTodoId === todo.id ? (
-                    <div>
-                      <input
-                        type="text"
-                        value={this.state.editingTodoName}
-                        onChange={this.handleEditNameChange}
-                      />
-                      <input
-                        type="text"
-                        value={this.state.editingTodoDescription}
-                        onChange={this.handleEditDescriptionChange}
-                      />
-                      <button onClick={() => this.handleSaveClick(todo.id)}>
-                        Save
-                      </button>
-                      <button onClick={this.handleCancelClick}>Cancel</button>
-                    </div>
-                  ) : (
-                    <>
-                      <label>{todo.name}</label>
-                      <label>{todo.description}</label>
-                      <span onClick={(e) => this.deleteTodo(todo.id)}>X</span>
-                      <button
-                        className="bg-blue"
-                        onClick={() =>
-                          this.setState({
-                            editingTodoId: todo.id,
-                            editingTodoName: todo.name,
-                            editingTodoDescription: todo.description,
-                          })
-                        }
-                      >
-                        Update
-                      </button>
-                    </>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+            <div className="listWrapper p-10 m-2">
+  <ul className="taskList grid grid-cols-1 gap-4 m-2">
+    {this.state.todos.map((todo) => {
+      return (
+        <li className="bg-white p-0.5" todo={todo} key={todo.id}>
+          <div className="flex items-center mb-2">
+            <input
+              type="checkbox"
+              checked={todo.done}
+              onChange={(e) => this.updateTodo(e, todo.id)}
+            />
+            {this.state.editingTodoId === todo.id ? (
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-row space-x-4 ">
+                <input
+                  id="editName"
+                  className="p-2 mb-2 border border-gray-400"
+                  type="text"
+                  value={this.state.editingTodoName}
+                  onChange={this.handleEditNameChange}
+                />
+                <input
+                  id="editDescription"
+                  className="p-2 border border-gray-400"
+                  type="text"
+                  value={this.state.editingTodoDescription}
+                  onChange={this.handleEditDescriptionChange}
+                />
+                </div>
+                <button onClick={() => this.handleSaveClick(todo.id)}>
+                  Save
+                </button>
+                <button onClick={this.handleCancelClick}>Cancel</button>
+              </div>
+            ) : (
+              <>
+                <div className="flex flex-col">
+                <label className="mb-2">{todo.name}</label>
+                <label>{todo.description}</label>
+                </div>
+                <div className="flex ml-auto">
+  <span onClick={(e) => this.deleteTodo(todo.id)}>X</span>
+  <button
+    className="bg-blue ml-2"
+    onClick={() =>
+      this.setState({
+        editingTodoId: todo.id,
+        editingTodoName: todo.name,
+        editingTodoDescription: todo.description,
+      })
+    }
+  >
+    Update
+  </button>
+</div>
+              </>
+            )}
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+           
+
           </div>
         );
       }
