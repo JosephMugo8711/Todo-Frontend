@@ -10,7 +10,7 @@ class TodosContainer extends Component  {
     }
 
     getTodos() {
-        axios.get('/api/todos')
+        axios.get('/todos')
         .then(res => {
             this.setState({todos: res.data})
         })
@@ -36,10 +36,20 @@ class TodosContainer extends Component  {
                         />
                         Completed
                     </label>
-                    <button type="submit">+</button>
+                    <button type="submit" onSubmit={this.createTodo}>+</button>
                 </div>  	    
                 <div className="listWrapper">
                     <ul className="taskList">
+                        {this.state.todos.map((todo) => {
+                            return (
+                                <li className='' todo={todo} key={todo.id}>
+                                    <input  type="checkbox"/>
+                                    <label>{todo.name}</label>
+                                    <span>X</span>
+
+                                </li>
+                            )
+                        })}
                     </ul>
                 </div>
             </div>
