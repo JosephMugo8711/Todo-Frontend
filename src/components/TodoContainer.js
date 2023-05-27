@@ -52,7 +52,11 @@ class TodosContainer extends Component  {
         
     };
 
-    
+    handleNameChange = (event) => {
+        this.setState({inputValue: event.target.value})
+    }
+
+
 
 
 
