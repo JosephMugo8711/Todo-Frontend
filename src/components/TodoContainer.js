@@ -73,7 +73,14 @@ class TodosContainer extends Component  {
                         value={this.state.inputValue}
                         onChange={this.handleNameChange}
                         />
-                    <input className="" type="text" placeholder="task description" maxLength="50" />
+                    <input 
+                        className="" 
+                        type="text" 
+                        placeholder="task description" 
+                        maxLength="50" 
+                        value={this.state.taskDescription}
+                        onChange={this.handleDescriptionChange}
+                        />
                     <label>
                         <input
                         type="checkbox"
