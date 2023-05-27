@@ -64,26 +64,41 @@ class TodosContainer extends Component  {
     };
 
     updateTodo = async (e, id) => {
-        try{
-            const response = await axios.put('/todos/${id', {todo: {done: e.target.checked}})
-            const updatedTodo = response.data;
-
-            this.setState(prevState => {
-                const todos = prevState.todos.map(todo => {
-                    if (todo.id === updatedTodo.id){
-                        return updatedTodo
-                    }
-                    return todo;
-                });
-
-                return {
-                    todos: todos
-                };
+        try {
+          const { editingTodoName, editingTodoDescription } = this.state;
+          const updatedData = {};
+      
+          if (editingTodoName) {
+            updatedData.name = editingTodoName;
+          }
+      
+          if (editingTodoDescription) {
+            updatedData.description = editingTodoDescription;
+          }
+      
+          const response = await axios.put(`/todos/${id}`, { todo: updatedData });
+          const updatedTodo = response.data;
+      
+          this.setState((prevState) => {
+            const todos = prevState.todos.map((todo) => {
+              if (todo.id === updatedTodo.id) {
+                return updatedTodo;
+              }
+              return todo;
             });
+      
+            return {
+              todos,
+              editingTodoId: null,
+              editingTodoName: '',
+              editingTodoDescription: '',
+            };
+          });
         } catch (error) {
-            console.log(error)
+          console.log(error);
         }
-    };
+      };
+      
     handleEditNameChange = (event) => {
         this.setState({ editingTodoName: event.target.value });
       };
@@ -95,22 +110,25 @@ class TodosContainer extends Component  {
       handleSaveClick = (id) => {
         const { editingTodoName, editingTodoDescription } = this.state;
         const updatedData = {};
-    
+      
         if (editingTodoName) {
           updatedData.name = editingTodoName;
         }
-    
+      
         if (editingTodoDescription) {
           updatedData.description = editingTodoDescription;
         }
-    
-        this.updateTodo(id, updatedData);
-        this.setState({
-          editingTodoId: null,
-          editingTodoName: '',
-          editingTodoDescription: '',
-        });
+      
+        if (id && Object.keys(updatedData).length > 0) {
+          this.updateTodo(id.toString(), updatedData); 
+          this.setState({
+            editingTodoId: null,
+            editingTodoName: '',
+            editingTodoDescription: '',
+          });
+        }
       };
+      
     
       handleCancelClick = () => {
         this.setState({
@@ -151,51 +169,56 @@ class TodosContainer extends Component  {
               </button>
             </div>
             <div className="listWrapper">
-              <ul className="taskList">
-                {this.state.todos.map((todo) => {
-                  return (
-                    <li className="" todo={todo} key={todo.id}>
+          <ul className="taskList">
+            {this.state.todos.map((todo) => {
+              return (
+                <li className="" todo={todo} key={todo.id}>
+                  <input
+                    type="checkbox"
+                    checked={todo.done}
+                    onChange={(e) => this.updateTodo(e, todo.id)}
+                  />
+                  {this.state.editingTodoId === todo.id ? (
+                    <div>
                       <input
-                        type="checkbox"
-                        checked={todo.done}
-                        onChange={(e) => this.updateTodo(e, todo.id)}
+                        type="text"
+                        value={this.state.editingTodoName}
+                        onChange={this.handleEditNameChange}
                       />
+                      <input
+                        type="text"
+                        value={this.state.editingTodoDescription}
+                        onChange={this.handleEditDescriptionChange}
+                      />
+                      <button onClick={() => this.handleSaveClick(todo.id)}>
+                        Save
+                      </button>
+                      <button onClick={this.handleCancelClick}>Cancel</button>
+                    </div>
+                  ) : (
+                    <>
                       <label>{todo.name}</label>
                       <label>{todo.description}</label>
                       <span>X</span>
                       <button
                         className="bg-blue"
-                        onClick={() => this.handleUpdateClick(todo.id)}
+                        onClick={() =>
+                          this.setState({
+                            editingTodoId: todo.id,
+                            editingTodoName: todo.name,
+                            editingTodoDescription: todo.description,
+                          })
+                        }
                       >
                         Update
                       </button>
-                      {this.state.editingTodoId === todo.id && (
-                        <div>
-                          <input
-                            type="text"
-                            value={this.state.editingTodoName}
-                            onChange={(e) =>
-                              this.setState({ editingTodoName: e.target.value })
-                            }
-                          />
-                          <input
-                            type="text"
-                            value={this.state.editingTodoDescription}
-                            onChange={(e) =>
-                              this.setState({ editingTodoDescription: e.target.value })
-                            }
-                          />
-                          <button onClick={() => this.handleSaveClick(todo.id)}>
-                            Save
-                          </button>
-                          <button onClick={this.handleCancelClick}>Cancel</button>
-                        </div>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+                    </>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
           </div>
         );
       }
