@@ -84,28 +84,42 @@ class TodosContainer extends Component  {
             console.log(error)
         }
     };
-    handleUpdateClick = (id) => {
-        const updatedData = {};
-      
-        const name = prompt('Enter the new name:');
-        if (name) {
-          updatedData.name = name;
-        }
-      
-        const description = prompt('Enter the new description:');
-        if (description) {
-          updatedData.description = description;
-        }
-      
-        const completed = window.confirm('Is the task completed?');
-        if (completed) {
-          updatedData.completed = completed;
-        }
-      
-        if (Object.keys(updatedData).length > 0) {
-          this.updateTodo(id, updatedData);
-        }
+    handleEditNameChange = (event) => {
+        this.setState({ editingTodoName: event.target.value });
       };
+    
+      handleEditDescriptionChange = (event) => {
+        this.setState({ editingTodoDescription: event.target.value });
+      };
+    
+      handleSaveClick = (id) => {
+        const { editingTodoName, editingTodoDescription } = this.state;
+        const updatedData = {};
+    
+        if (editingTodoName) {
+          updatedData.name = editingTodoName;
+        }
+    
+        if (editingTodoDescription) {
+          updatedData.description = editingTodoDescription;
+        }
+    
+        this.updateTodo(id, updatedData);
+        this.setState({
+          editingTodoId: null,
+          editingTodoName: '',
+          editingTodoDescription: '',
+        });
+      };
+    
+      handleCancelClick = () => {
+        this.setState({
+          editingTodoId: null,
+          editingTodoName: '',
+          editingTodoDescription: '',
+        });
+      };
+
       
 
       render() {
