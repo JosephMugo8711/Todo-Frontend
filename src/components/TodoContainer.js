@@ -60,16 +60,18 @@ class TodosContainer extends Component  {
         this.setState({descriptionValue: event.target.value})
     };
 
-
-
-
-
     render() {
         return (
 
             <div>
                 <div className="p-15">
-                    <input className="" type="text" placeholder="task name" maxLength="50" />
+                    <input 
+                        className="" 
+                        type="text" 
+                        placeholder="task name" 
+                        maxLength="50" 
+                        value={this.state.inputValue}
+                        />
                     <input className="" type="text" placeholder="task description" maxLength="50" />
                     <label>
                         <input
