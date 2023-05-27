@@ -14,6 +14,7 @@ class TodosContainer extends Component  {
         .then(res => {
             this.setState({todos: res.data})
         })
+        .catch(error => console.log(error))
     }
 
 
