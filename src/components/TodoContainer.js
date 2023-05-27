@@ -138,6 +138,17 @@ class TodosContainer extends Component  {
         });
       };
 
+      deleteTodo = (id) => {
+        axios.delete(`/todos/${id}`)
+        .then(response => {
+            const todoIndex = this.state.todos.findIndex(x => x.id === id);
+            const todos = [...this.state.todos];
+            todos.splice(todoIndex, 1);
+            this.setState({ todos });
+        })
+        .catch(error => console.log(error));
+      }
+
       
 
       render() {
@@ -199,7 +210,7 @@ class TodosContainer extends Component  {
                     <>
                       <label>{todo.name}</label>
                       <label>{todo.description}</label>
-                      <span>X</span>
+                      <span onClick={(e) => this.deleteTodo(todo.id)}>X</span>
                       <button
                         className="bg-blue"
                         onClick={() =>
