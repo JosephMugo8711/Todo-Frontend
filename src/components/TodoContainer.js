@@ -41,7 +41,7 @@ class TodosContainer extends Component  {
         axios.post('/todos', newTodo)
         .then((res) => {
             const createdTodo = res.data;
-            const updatedTodo = [createdTodo, ...this.state.todos];
+            const updatedTodos = [createdTodo, ...this.state.todos];
             this.setState({
                 todos: updatedTodos,
                 inputValue: '',
@@ -87,7 +87,7 @@ class TodosContainer extends Component  {
                         />
                         Completed
                     </label>
-                    <button type="submit" onSubmit={this.createTodo}>+</button>
+                    <button type="submit" onClick={this.createTodo}>+</button>
                 </div>  	    
                 <div className="listWrapper">
                     <ul className="taskList">
