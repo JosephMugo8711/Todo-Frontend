@@ -153,44 +153,43 @@ class TodosContainer extends Component  {
 
       render() {
         return (
-          <div className="bg-gray-300">
-            <div className="p-15">
-                
-            <div className="flex flex-col mb-3">
-            <label htmlFor="taskName" className="text-lg font-bold">
-              Task name
-            </label>
-            <input
-              id="taskName"
-              className="p-2 border border-gray-400"
-              type="text"
-              placeholder="Task name"
-              maxLength="50"
-              value={this.state.inputValue}
-              onChange={this.handleNameChange}
-            />
-          </div>
-          <div className="flex flex-col mb-3">
-            <label htmlFor="taskDescription" className="text-lg font-bold">
-              Task description
-            </label>
-            <input
-              id="taskDescription"
-              className="p-2 border border-gray-400"
-              type="text"
-              placeholder="Task description"
-              maxLength="50"
-              value={this.state.descriptionValue}
-              onChange={this.handleDescriptionChange}
-            />
-          </div>
-              <label>
-                <input type="checkbox" />
-                Completed
-              </label>
-              <button type="submit" onClick={this.createTodo}>
-                +
-              </button>
+          <div className="bg-gray-300 mx-1 p-1">
+            <div className="p-15 flex flex-row items-center">  
+                <div className="flex flex-col mb-3">
+                    <label htmlFor="taskName" className="text-lg font-bold mr-10">
+                        Task name
+                    </label>   
+                    <input
+                    id="taskName"
+                    className="p-2 ml-4 border border-gray-400"
+                    type="text"
+                    placeholder="Task name"
+                    maxLength="50"
+                    value={this.state.inputValue}
+                    onChange={this.handleNameChange}
+                    />
+                </div>
+                <div className="flex flex-col mb-3">
+                    <label htmlFor="taskDescription" className="text-lg font-bold mr-10">
+                        Task description
+                    </label>
+                    <input
+                    id="taskDescription"
+                    className="p-2 ml-4 border border-gray-400"
+                    type="text"
+                    placeholder="Task description"
+                    maxLength="50"
+                    value={this.state.descriptionValue}
+                    onChange={this.handleDescriptionChange}
+                    />
+                </div>
+                <label className='mr-10'>
+                    <input type="checkbox"  />
+                    Completed
+                </label>
+                <button type="submit" className='mr-10' onClick={this.createTodo}>
+                    +
+                </button>
             </div>
             <div className="listWrapper">
           <ul className="taskList">
