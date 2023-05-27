@@ -71,6 +71,7 @@ class TodosContainer extends Component  {
                         placeholder="task name" 
                         maxLength="50" 
                         value={this.state.inputValue}
+                        onChange={this.handleNameChange}
                         />
                     <input className="" type="text" placeholder="task description" maxLength="50" />
                     <label>
