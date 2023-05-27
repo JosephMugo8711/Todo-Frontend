@@ -56,6 +56,10 @@ class TodosContainer extends Component  {
         this.setState({inputValue: event.target.value})
     }
 
+    handleDescriptionChange = (event) => {
+        this.setState({descriptionValue: event.target.value})
+    };
+
 
 
 
