@@ -8,6 +8,16 @@ class TodosContainer extends Component  {
             todos: []
         }
     }
+
+    getTodos() {
+        axios.get('/api/todos')
+        .then(res => {
+            this.setState({todos: res.data})
+        })
+    }
+
+
+
     render() {
         return (
 
