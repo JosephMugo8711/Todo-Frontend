@@ -76,7 +76,7 @@ class TodosContainer extends Component  {
             updatedData.description = editingTodoDescription;
           }
       
-          const response = await axios.put(`/todos/${id}`, { todo: updatedData });
+          const response = await axios.put(`/todos/${id}`, { todo: updatedData })
           const updatedTodo = response.data;
       
           this.setState((prevState) => {
@@ -153,24 +153,37 @@ class TodosContainer extends Component  {
 
       render() {
         return (
-          <div>
+          <div className="bg-gray-300">
             <div className="p-15">
-              <input
-                className=""
-                type="text"
-                placeholder="task name"
-                maxLength="50"
-                value={this.state.inputValue}
-                onChange={this.handleNameChange}
-              />
-              <input
-                className=""
-                type="text"
-                placeholder="task description"
-                maxLength="50"
-                value={this.state.descriptionValue}
-                onChange={this.handleDescriptionChange}
-              />
+                
+            <div className="flex flex-col mb-3">
+            <label htmlFor="taskName" className="text-lg font-bold">
+              Task name
+            </label>
+            <input
+              id="taskName"
+              className="p-2 border border-gray-400"
+              type="text"
+              placeholder="Task name"
+              maxLength="50"
+              value={this.state.inputValue}
+              onChange={this.handleNameChange}
+            />
+          </div>
+          <div className="flex flex-col mb-3">
+            <label htmlFor="taskDescription" className="text-lg font-bold">
+              Task description
+            </label>
+            <input
+              id="taskDescription"
+              className="p-2 border border-gray-400"
+              type="text"
+              placeholder="Task description"
+              maxLength="50"
+              value={this.state.descriptionValue}
+              onChange={this.handleDescriptionChange}
+            />
+          </div>
               <label>
                 <input type="checkbox" />
                 Completed

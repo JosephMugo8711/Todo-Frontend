@@ -1,10 +1,11 @@
 .App {
   text-align: center;
-  width: 40%;
+  width: 80%;
 	height: 400px;
 	position: relative;
-	margin: 0 auto;
+	margin: 3rem auto;
 	border-radius: 5px;
+  background-color: #d7d9d9;
 }
 
 .App-logo {
