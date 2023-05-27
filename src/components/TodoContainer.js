@@ -60,6 +60,12 @@ class TodosContainer extends Component  {
         this.setState({descriptionValue: event.target.value})
     };
 
+    updateTodo = async (e, id) => {
+        try{
+            
+        }
+    };
+
     render() {
         return (
 
@@ -94,7 +100,11 @@ class TodosContainer extends Component  {
                         {this.state.todos.map((todo) => {
                             return (
                                 <li className='' todo={todo} key={todo.id}>
-                                    <input  type="checkbox"/>
+                                    <input  
+                                        type="checkbox"
+                                        checked={todo.done}
+                                        onChange={(e) => this.updateTodo(e, todo.id)}
+                                        />
                                     <label>{todo.name}</label>
                                     <label>{todo.description}</label>
                                     <span>X</span>
