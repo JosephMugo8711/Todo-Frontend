@@ -207,7 +207,7 @@ class TodosContainer extends Component  {
             />
             {this.state.editingTodoId === todo.id ? (
               <div className="flex flex-row justify-between m-auto">
-                <div className="flex flex-row space-x-4 ">
+                <div className="flex flex-col space-y-2 md:flex-row md:space-x-4">
                 <input
                   id="editName"
                   className="p-2 border border-gray-400 flex-grow"
@@ -217,13 +217,13 @@ class TodosContainer extends Component  {
                 />
                 <input
                   id="editDescription"
-                  className="p-2 border border-gray-400 w-40 flex-grow-2"
+                  className="p-2 border border-gray-400 w-full md:w-40 flex-grow-2"
                   type="text"
                   value={this.state.editingTodoDescription}
                   onChange={this.handleEditDescriptionChange}
                 />
                 </div>
-                <div className='ml-10 flex flex-row'>
+                <div className='ml-10 flex flex-row space-x-2 md:space-x-4'>
                 <button onClick={() => this.handleSaveClick(todo.id)}>
                   Save
                 </button>
@@ -232,7 +232,7 @@ class TodosContainer extends Component  {
               </div>
             ) : (
               <>
-                <div className="flex flex-col ml-15">
+                <div className="flex flex-col ml-5 md:ml-15">
                 <label className="mb-2">{todo.name}</label>
                 <label>{todo.description}</label>
                 </div>
