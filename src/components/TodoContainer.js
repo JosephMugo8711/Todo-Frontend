@@ -175,7 +175,7 @@ class TodosContainer extends Component  {
                     </label>
                     <input
                     id="taskDescription"
-                    className="p-2 ml-4 border border-gray-400  w-80"
+                    className="p-2 ml-4 border border-gray-400 w-full md:w-80"
                     type="text"
                     placeholder="Task description"
                     maxLength="100"
