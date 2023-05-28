@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { Trash2 } from 'react-feather';
+import { Edit2 } from 'react-feather';
+
 
 class TodosContainer extends Component  {
     constructor(props) {
@@ -238,19 +240,20 @@ class TodosContainer extends Component  {
                 <label>{todo.description}</label>
                 </div>
                 <div className="flex ml-auto">
-  <span onClick={(e) => this.deleteTodo(todo.id)}>  <Trash2 size={16} /></span>
-  <button
-    className="bg-blue ml-2"
-    onClick={() =>
-      this.setState({
-        editingTodoId: todo.id,
-        editingTodoName: todo.name,
-        editingTodoDescription: todo.description,
-      })
-    }
-  >
-    Update
-  </button>
+                <button
+                    className="bg-blue ml-2"
+                    onClick={() =>
+                    this.setState({
+                        editingTodoId: todo.id,
+                        editingTodoName: todo.name,
+                        editingTodoDescription: todo.description,
+                    })
+                    }
+                >
+                    <Edit2 size={16} />
+                </button>
+            <span onClick={(e) => this.deleteTodo(todo.id)}>  <Trash2 size={16} /></span>
+  
 </div>
               </>
             )}
