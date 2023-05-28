@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { Trash2 } from 'react-feather';
 
 class TodosContainer extends Component  {
     constructor(props) {
@@ -232,12 +233,12 @@ class TodosContainer extends Component  {
               </div>
             ) : (
               <>
-                <div className="flex flex-col ml-20">
+                <div className="flex flex-col ml-15">
                 <label className="mb-2">{todo.name}</label>
                 <label>{todo.description}</label>
                 </div>
                 <div className="flex ml-auto">
-  <span onClick={(e) => this.deleteTodo(todo.id)}>X</span>
+  <span onClick={(e) => this.deleteTodo(todo.id)}>  <Trash2 size={16} /></span>
   <button
     className="bg-blue ml-2"
     onClick={() =>
