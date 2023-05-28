@@ -194,7 +194,7 @@ class TodosContainer extends Component  {
                     +
                 </button>
             </div>
-            <div className="listWrapper p-10 m-2">
+            <div className="listWrapper p-5 md:p-10 m-2">
   <ul className="taskList grid grid-cols-1 gap-4 m-2">
     {this.state.todos.map((todo) => {
       return (
