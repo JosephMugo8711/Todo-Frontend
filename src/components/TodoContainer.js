@@ -151,14 +151,11 @@ class TodosContainer extends Component  {
         })
         .catch(error => console.log(error));
       }
-
-      
-
       render() {
         return (
           <div className="bg-gray-300 mx-1 p-1">
-            <div className="p-15 flex flex-row items-center">  
-                <div className="flex flex-col mb-3">
+            <div className="p-5 md:p-10 flex flex-col md:flex-row items-center">  
+                <div className="flex flex-col mb-3 ">
                     <label htmlFor="taskName" className="text-lg font-bold mr-10">
                         Task name
                     </label>   
