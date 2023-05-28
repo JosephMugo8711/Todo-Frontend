@@ -153,7 +153,7 @@ class TodosContainer extends Component  {
       }
       render() {
         return (
-          <div className="bg-gray-300 mx-1 p-1">
+          <div className="bg-gray-300">
             <div className="p-5 md:p-10 flex flex-col md:flex-row items-center">  
                 <div className="flex flex-col mb-3 ">
                     <label htmlFor="taskName" className="text-lg font-bold mr-10">
@@ -195,71 +195,71 @@ class TodosContainer extends Component  {
                 </button>
             </div>
             <div className="listWrapper p-5 md:p-10 m-2">
-  <ul className="taskList grid grid-cols-1 gap-4 m-2">
-    {this.state.todos.map((todo) => {
-      return (
-        <li className="bg-white p-0.5" todo={todo} key={todo.id}>
-          <div className="flex items-center mb-2">
-            <input
-              type="checkbox"
-              checked={todo.done}
-              onChange={(e) => this.updateTodo(e, todo.id)}
-            />
-            {this.state.editingTodoId === todo.id ? (
-              <div className="flex flex-row justify-between m-auto">
-                <div className="flex flex-col space-y-2 md:flex-row md:space-x-4">
-                <input
-                  id="editName"
-                  className="p-2 border border-gray-400 flex-grow"
-                  type="text"
-                  value={this.state.editingTodoName}
-                  onChange={this.handleEditNameChange}
-                />
-                <input
-                  id="editDescription"
-                  className="p-2 border border-gray-400 w-full md:w-40 flex-grow-2"
-                  type="text"
-                  value={this.state.editingTodoDescription}
-                  onChange={this.handleEditDescriptionChange}
-                />
-                </div>
-                <div className='ml-10 flex flex-row space-x-2 md:space-x-4'>
-                <button onClick={() => this.handleSaveClick(todo.id)}>
-                  Save
-                </button>
-                <button className='ml-10' onClick={this.handleCancelClick}>Cancel</button>
-                </div>
-              </div>
+                <ul className="taskList grid grid-cols-1 gap-4 m-2">
+                    {this.state.todos.map((todo) => {
+                        return (
+                            <li className="bg-white p-0.5" todo={todo} key={todo.id}>
+                                <div className="flex items-center mb-2">
+                                    <input
+                                    type="checkbox"
+                                    checked={todo.done}
+                                    onChange={(e) => this.updateTodo(e, todo.id)}
+                                    />
+                    {this.state.editingTodoId === todo.id ? (
+                        <div className="flex flex-row justify-between m-auto">
+                            <div className="flex flex-col space-y-2 md:flex-row md:space-x-4">
+                                <input
+                                    id="editName"
+                                    className="p-2 border border-gray-400 flex-grow"
+                                    type="text"
+                                    value={this.state.editingTodoName}
+                                    onChange={this.handleEditNameChange}
+                                />
+                                <input
+                                    id="editDescription"
+                                    className="p-2 border border-gray-400 w-full md:w-40 flex-grow-2"
+                                    type="text"
+                                    value={this.state.editingTodoDescription}
+                                    onChange={this.handleEditDescriptionChange}
+                                />
+                           </div>
+                            <div className='ml-10 flex flex-row space-x-2 md:space-x-4'>
+                                <button onClick={() => this.handleSaveClick(todo.id)}>
+                                Save
+                                </button>
+                                <button className='ml-10' onClick={this.handleCancelClick}>Cancel</button>
+                            </div>
+                        </div>
             ) : (
-              <>
-                <div className="flex flex-col ml-5 md:ml-15">
-                <label className="mb-2">{todo.name}</label>
-                <label>{todo.description}</label>
-                </div>
-                <div className="flex ml-auto">
-                <button
-                    className="bg-blue ml-2"
-                    onClick={() =>
-                    this.setState({
-                        editingTodoId: todo.id,
-                        editingTodoName: todo.name,
-                        editingTodoDescription: todo.description,
-                    })
-                    }
-                >
-                    <Edit2 size={16} />
-                </button>
-            <span onClick={(e) => this.deleteTodo(todo.id)}>  <Trash2 size={16} /></span>
+                <>
+                    <div className="flex flex-col ml-5 md:ml-15">
+                        <label className="mb-2">{todo.name}</label>
+                        <label>{todo.description}</label>
+                    </div>
+                    <div className="flex ml-auto">
+                    <button
+                        className="bg-blue ml-2"
+                        onClick={() =>
+                        this.setState({
+                            editingTodoId: todo.id,
+                            editingTodoName: todo.name,
+                            editingTodoDescription: todo.description,
+                        })
+                        }
+                    >
+                        <Edit2 size={16} />
+                    </button>
+                    <span onClick={(e) => this.deleteTodo(todo.id)}>  <Trash2 size={16} /></span>
   
-</div>
+            </div>
               </>
-            )}
-          </div>
-        </li>
-      );
-    })}
-  </ul>
-</div>
+                    )}
+                </div>
+                </li>
+            );
+            })}
+        </ul>
+        </div>
 
            
 
