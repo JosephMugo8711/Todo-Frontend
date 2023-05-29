@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Trash2 } from 'react-feather';
+import { Edit2 } from 'react-feather';
+import Swal from 'sweetalert2';
+
 
 class TodosContainer extends Component {
   constructor(props) {
@@ -31,7 +35,12 @@ class TodosContainer extends Component {
 
   createTodo = () => {
     const { inputValue, descriptionValue } = this.state;
-    if (inputValue.trim() === '') {
+    if (inputValue.trim() === '' || descriptionValue.trim() === '') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'Name and description cannot be empty',
+      });
       return;
     }
     const newTodo = {
@@ -47,6 +56,8 @@ class TodosContainer extends Component {
       })
       .catch((error) => console.log(error));
   };
+  
+  
 
   handleNameChange = (e) => {
     this.setState({ inputValue: e.target.value });
@@ -217,11 +228,11 @@ class TodosContainer extends Component {
                     disabled={todo.done}
                   />
                   {this.state.editingTodoId === todo.id ? (
-                    <div className="flex flex-row justify-between m-auto">
-                      <div className="md:flex-row md:space-x-4">
+                   <div className=" ml-4 flex ">
+                    <div className="md:flex-wrap md:space-x-4">
                         <textarea
                           id="editName"
-                          className="p-2 mt-2 h-10 p-0 border border-gray-400 w-full md:w-80"
+                          className="p-2 mt-2 h-10 p-0 border border-gray-400 "
                           type="text"
                           value={editingTodoName}
                           onChange={this.handleEditNameChange}
@@ -247,7 +258,8 @@ class TodosContainer extends Component {
                           Cancel
                         </button>
                       </div>
-                    </div>
+                 </div>
+                 
                   ) : (
                     <>
                       <div className="flex flex-col ml-5 md:ml-15">
@@ -277,13 +289,13 @@ class TodosContainer extends Component {
                             })
                           }
                         >
-                          Edit
+                          <Edit2 size={20} />
                         </button>
                         <button
                           className="bg-blue-500 text-white py-2 px-4 rounded ml-2"
                           onClick={(e) => this.deleteTodo(todo.id)}
                         >
-                          Delete
+                           <Trash2 size={20} />
                         </button>
                       </div>
                     </>
