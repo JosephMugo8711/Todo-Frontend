@@ -152,9 +152,9 @@ class TodosContainer extends Component {
     const updatedTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, done: e.target.checked } : todo
     );
-
+  
     axios
-      .put(`/todos/${id}`, { todo: { done: e.target.checked } })
+      .patch(`/todos/${id}/complete`)
       .then(() => {
         this.setState({ todos: updatedTodos });
       })
@@ -162,6 +162,7 @@ class TodosContainer extends Component {
         console.log(error);
       });
   };
+  
 
   deleteTodo = (id) => {
     axios
@@ -236,7 +237,7 @@ class TodosContainer extends Component {
         <div className="w-full m-2">
           <ul className="grid grid-cols-1 gap-4 w-90 mb-5">
             {todos.map((todo) => (
-              <li className="bg-white px-2 w-full" key={todo.id}>
+              <li className={`bg-white px-2 w-full ${todo.done ? 'completed' : ''}`} key={todo.id}>
                 <div className="flex items-center mb-2 px-3">
                   <input
                     id='checkbox'

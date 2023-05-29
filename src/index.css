@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 
-
-
+.completed {
+  text-decoration: line-through;
+  background-color: #f0f0f0;
+}
 .line-through {
   text-decoration: line-through;
 }
