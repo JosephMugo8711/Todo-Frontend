@@ -140,14 +140,14 @@ class TodosContainer extends Component {
 
     return (
       <div className="container mx-auto max-w-md">
-        <div className="flex p-5 md:p-10 flex flex-col md:flex-row items-center">
-          <div className="flex flex-col">
-            <label htmlFor="taskName" className="text-lg font-bold mr-10">
+       <div className="flex mr-10 md:p-10 flex flex-col md:flex-row items-center">
+          <div className="flex flex-col mb-2 md:mr-2">
+            <label htmlFor="taskName" className="text-lg font-bold">
               Task name
             </label>
             <input
               id="taskName"
-              className="p-2 ml-4 border border-gray-400 w-full md:w-64"
+              className="p-2 border border-gray-400 w-full md:w-64"
               type="text"
               placeholder="Task name"
               maxLength="50"
@@ -155,13 +155,13 @@ class TodosContainer extends Component {
               onChange={this.handleNameChange}
             />
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="taskDescription" className="text-lg font-bold mr-10">
+          <div className="flex flex-col mb-2 md:ml-2 md:mr-2">
+            <label htmlFor="taskDescription" className="text-lg font-bold">
               Task description
             </label>
             <input
               id="taskDescription"
-              className="p-2 ml-4 border border-gray-400 w-full md:w-80"
+              className="p-2 border border-gray-400 w-full md:w-80"
               type="text"
               placeholder="Task description"
               maxLength="100"
@@ -169,10 +169,11 @@ class TodosContainer extends Component {
               onChange={this.handleDescriptionChange}
             />
           </div>
-          <button className="bg-blue-500 text-white ml-2" onClick={this.createTodo}>
+          <button className="bg-blue-500 text-white ml-2 p-2 mt-3 md:mt-0">
             Add
           </button>
         </div>
+
         <div className="mt-4">
           <ul>
             {todos.map((todo) => (
