@@ -56,9 +56,6 @@ class TodosContainer extends Component {
       })
       .catch((error) => console.log(error));
   };
-  
-  
-
   handleNameChange = (e) => {
     this.setState({ inputValue: e.target.value });
   };
@@ -90,6 +87,16 @@ class TodosContainer extends Component {
   };
 
   updateTodo = (id, updatedData) => {
+    const isTaskDone = this.state.todos.find((todo) => todo.id === id)?.done;
+    if (isTaskDone) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Cannot Edit',
+        text: 'This task is already marked as done and cannot be edited.',
+      });
+      return;
+    }
+  
     axios
       .put(`/todos/${id}`, { todo: updatedData })
       .then((response) => {
@@ -108,19 +115,20 @@ class TodosContainer extends Component {
         console.log(error);
       });
   };
-
   handleSaveClick = (id) => {
     const { editingTodoName, editingTodoDescription } = this.state;
     const updatedData = {
       name: editingTodoName,
       description: editingTodoDescription,
     };
-
-    if (id && Object.keys(updatedData).length > 0) {
+  
+    const isTaskDone = this.state.todos.find((todo) => todo.id === id)?.done;
+  
+    if (id && Object.keys(updatedData).length > 0 && !isTaskDone) {
       this.updateTodo(id, updatedData);
     }
   };
-
+  
   handleCancelClick = () => {
     this.setState({
       editingTodoId: null,
