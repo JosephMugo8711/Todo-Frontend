@@ -140,7 +140,7 @@ class TodosContainer extends Component {
 
     return (
       <div className="container mx-auto max-w-md">
-       <div className="flex mr-10 md:p-10 flex flex-col md:flex-row items-center">
+       <div className="flex mr-10 md:p-10 flex flex-col md:flex-row" style={{ marginLeft: '-90px' }}>
           <div className="flex flex-col mb-2 md:mr-2">
             <label htmlFor="taskName" className="text-lg font-bold">
               Task name
@@ -169,10 +169,13 @@ class TodosContainer extends Component {
               onChange={this.handleDescriptionChange}
             />
           </div>
-          <button className="bg-blue-500 text-white ml-2 p-2 mt-3 md:mt-0">
-            Add
-          </button>
+          <div className='mt-7'>
+            <button type='submit' className="bg-blue-500 text-white py-2 px-4 rounded ml-10" onClick={this.createTodo}>
+              Add
+            </button>
+          </div>
         </div>
+
 
         <div className="mt-4">
           <ul>
