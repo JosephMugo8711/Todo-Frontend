@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="flex justify-center">
-        <h1 className="text-2xl font-bold mb-4 mt-4">Todo List</h1>
+        <h1 className="text-2xl font-bold mb-1 mt-3">Todo List</h1>
         </div>
         <TodoContainer />  
       </div>

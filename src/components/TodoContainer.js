@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class TodosContainer extends Component {
-  state = {
-    todos: [],
-    inputValue: '',
-    descriptionValue: '',
-    editingTodoId: null,
-    editingTodoName: '',
-    editingTodoDescription: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: [],
+      inputValue: '',
+      descriptionValue: '',
+      editingTodoId: null,
+      editingTodoName: '',
+      editingTodoDescription: '',
+    };
+  }
 
   componentDidMount() {
     this.fetchTodos();
@@ -54,11 +57,25 @@ class TodosContainer extends Component {
   };
 
   handleEditNameChange = (e) => {
-    this.setState({ editingTodoName: e.target.value });
+    const editingTodoId = this.state.editingTodoId;
+    const editingTodoName = e.target.value;
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) =>
+        todo.id === editingTodoId ? { ...todo, name: editingTodoName } : todo
+      ),
+      editingTodoName: editingTodoName
+    }));
   };
 
   handleEditDescriptionChange = (e) => {
-    this.setState({ editingTodoDescription: e.target.value });
+    const editingTodoId = this.state.editingTodoId;
+    const editingTodoDescription = e.target.value;
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) =>
+        todo.id === editingTodoId ? { ...todo, description: editingTodoDescription } : todo
+      ),
+      editingTodoDescription: editingTodoDescription
+    }));
   };
 
   updateTodo = (id, updatedData) => {
@@ -66,12 +83,9 @@ class TodosContainer extends Component {
       .put(`/todos/${id}`, { todo: updatedData })
       .then((response) => {
         const updatedTodo = response.data;
-        const todos = this.state.todos.map((todo) => {
-          if (todo.id === updatedTodo.id) {
-            return updatedTodo;
-          }
-          return todo;
-        });
+        const todos = this.state.todos.map((todo) =>
+          todo.id === updatedTodo.id ? updatedTodo : todo
+        );
         this.setState({
           todos,
           editingTodoId: null,
@@ -106,12 +120,9 @@ class TodosContainer extends Component {
 
   updateTodoStatus = (e, id) => {
     const { todos } = this.state;
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, done: e.target.checked };
-      }
-      return todo;
-    });
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, done: e.target.checked } : todo
+    );
 
     axios
       .put(`/todos/${id}`, { todo: { done: e.target.checked } })
@@ -135,12 +146,26 @@ class TodosContainer extends Component {
       });
   };
 
+  handleChangeStatus = (e, todoId) => {
+    const { todos } = this.state;
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === todoId) {
+        const updatedTodo = { ...todo, done: e.target.checked };
+        localStorage.setItem(`todo_${todoId}`, JSON.stringify(updatedTodo));
+        return updatedTodo;
+      }
+      return todo;
+    });
+
+    this.setState({ todos: updatedTodos });
+  };
+
   render() {
-    const { todos, inputValue, descriptionValue } = this.state;
+    const { todos, inputValue, descriptionValue, editingTodoName, editingTodoDescription } = this.state;
 
     return (
-      <div className="bg-gray-300 p-5 m-2  md:p-10">
-       <div className=" p-5 md:p-10 flex flex-col md:flex-row items-center ">
+      <div className="bg-gray-300 md:p-10">
+        <div className="p-5 md:p-10 flex flex-col md:flex-row justify-center items-center">
           <div className="flex flex-col mb-2 md:mr-2">
             <label htmlFor="taskName" className="text-lg font-bold">
               Task name
@@ -151,7 +176,7 @@ class TodosContainer extends Component {
               type="text"
               placeholder="Task name"
               maxLength="50"
-              value={this.state.inputValue}
+              value={inputValue}
               onChange={this.handleNameChange}
             />
           </div>
@@ -165,105 +190,113 @@ class TodosContainer extends Component {
               type="text"
               placeholder="Task description"
               maxLength="100"
-              value={this.state.descriptionValue}
+              value={descriptionValue}
               onChange={this.handleDescriptionChange}
             />
           </div>
-          <div className='mt-5'>
-            <button type='submit' className="bg-blue-500 text-white py-2 px-4 rounded ml-10" onClick={this.createTodo}>
+          <div className="mt-5">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded ml-10"
+              onClick={this.createTodo}
+            >
               Add
             </button>
           </div>
         </div>
         <div className="w-full m-2">
-            <ul className="grid grid-cols-1 gap-4 w-90 mb-5">
-              {todos.map((todo) => (
-                <li className="bg-white px-2 w-full" key={todo.id}>
-                  <div className="flex items-center mb-2 px-3">
-                    <input
-                      type="checkbox"
-                      checked={todo.done}
-                      onChange={(e) => this.updateTodoStatus(e, todo.id)}
-                    />
-                    {this.state.editingTodoId === todo.id ? (
-                      <div className="flex flex-row justify-between m-auto">
-                        <div className="flex flex-col space-y-2 md:flex-row md:space-x-4">
-                          <input
-                            id="editName"
-                            className="p-2 border border-gray-400 w-full md:w-64"
-                            type="text"
-                            value={this.state.editingTodoName}
-                            onChange={this.handleEditNameChange}
-                          />
-                          <textarea
-                            id="editDescription"
-                            className="p-2 border border-gray-400 w-full md:w-80 h-20"
-                            value={this.state.editingTodoDescription}
-                            onChange={this.handleEditDescriptionChange}
-                          />
-                        </div>
-                        <div className="ml-10 flex flex-row space-x-4">
-                          <button
-                            className="bg-blue-500 text-white py-2 px-4 rounded"
-                            onClick={() => this.handleSaveClick(todo.id)}
-                          >
-                            Save
-                          </button>
-                          <button
-                            className="bg-gray-300 text-gray-700 py-2 px-4 rounded"
-                            onClick={this.handleCancelClick}
-                          >
-                            Cancel
-                          </button>
-                        </div>
+          <ul className="grid grid-cols-1 gap-4 w-90 mb-5">
+            {todos.map((todo) => (
+              <li className="bg-white px-2 w-full" key={todo.id}>
+                <div className="flex items-center mb-2 px-3">
+                  <input
+                    id='checkbox'
+                    type="checkbox"
+                    checked={todo.done || false}
+                    onChange={(e) => this.updateTodoStatus(e, todo.id)}
+                    disabled={todo.done}
+                  />
+                  {this.state.editingTodoId === todo.id ? (
+                    <div className="flex flex-row justify-between m-auto">
+                      <div className="md:flex-row md:space-x-4">
+                        <textarea
+                          id="editName"
+                          className="p-2 mt-2 h-10 p-0 border border-gray-400 w-full md:w-80"
+                          type="text"
+                          value={editingTodoName}
+                          onChange={this.handleEditNameChange}
+                        />
+                        <textarea
+                          id="editDescription"
+                          className="p-2 border border-gray-400 w-full md:w-80 h-10"
+                          value={editingTodoDescription}
+                          onChange={this.handleEditDescriptionChange}
+                        />
                       </div>
-                    ) : (
-                      <>
-                        <div className="flex flex-col ml-5 md:ml-15">
-                          <label
-                            className={`mb-2 ${todo.done ? 'line-through' : ''}`}
-                          >
-                            {todo.name}
-                          </label>
-                          <label
-                            className={`description-label ${
-                              todo.done ? 'line-through' : ''
-                            }`}
-                          >
-                            {todo.description}
-                          </label>
-                        </div>
-                        <div className="flex ml-auto">
-                          <button
-                            className="bg-blue-500 text-white py-2 px-4 rounded ml-2"
-                            onClick={() =>
-                              this.setState({
-                                editingTodoId: todo.id,
-                                editingTodoName: todo.name,
-                                editingTodoDescription: todo.description,
-                              })
-                            }
-                          >
-                            Edit
-                          </button>
-                          <span
-                            className="text-red-600 cursor-pointer ml-2"
-                            onClick={(e) => this.deleteTodo(todo.id)}
-                          >
-                            Delete
-                          </span>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
+                      <div className="ml-10 mt-2 flex flex-row space-x-4">
+                        <button
+                          className="bg-blue-500 text-white h-10 py-1 px-4 rounded ml-2"
+                          onClick={() => this.handleSaveClick(todo.id)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="bg-blue-500 text-white h-10 py-1 px-4 rounded ml-2"
+                          onClick={this.handleCancelClick}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex flex-col ml-5 md:ml-15">
+                        <label
+                          className={`mb-2 ${
+                            todo.done ? 'line-through' : ''
+                          }`}
+                        >
+                          {todo.name}
+                        </label>
+                        <label
+                          className={`description-label ${
+                            todo.done ? 'line-through' : ''
+                          }`}
+                        >
+                          {todo.description}
+                        </label>
+                      </div>
+                      <div className="flex ml-auto">
+                        <button
+                          className="bg-blue-500 text-white py-2 px-4 rounded ml-2"
+                          onClick={() =>
+                            this.setState({
+                              editingTodoId: todo.id,
+                              editingTodoName: todo.name,
+                              editingTodoDescription: todo.description,
+                            })
+                          }
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="bg-blue-500 text-white py-2 px-4 rounded ml-2"
+                          onClick={(e) => this.deleteTodo(todo.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
 }
 
 export default TodosContainer;
+
