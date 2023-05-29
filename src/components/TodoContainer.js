@@ -140,24 +140,35 @@ class TodosContainer extends Component {
 
     return (
       <div className="container mx-auto max-w-md">
-        <div className="flex">
+        <div className="flex p-5 md:p-10 flex flex-col md:flex-row items-center">
+          <div className="flex flex-col">
             <label htmlFor="taskName" className="text-lg font-bold mr-10">
               Task name
             </label>
-          <input
-            className="p-2 border border-gray-400 flex-grow"
-            type="text"
-            placeholder="Enter task name"
-            value={inputValue}
-            onChange={this.handleNameChange}
-          />
-          <input
-            className="p-2 border border-gray-400 flex-grow ml-2"
-            type="text"
-            placeholder="Enter task description"
-            value={descriptionValue}
-            onChange={this.handleDescriptionChange}
-          />
+            <input
+              id="taskName"
+              className="p-2 ml-4 border border-gray-400 w-full md:w-64"
+              type="text"
+              placeholder="Task name"
+              maxLength="50"
+              value={this.state.inputValue}
+              onChange={this.handleNameChange}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="taskDescription" className="text-lg font-bold mr-10">
+              Task description
+            </label>
+            <input
+              id="taskDescription"
+              className="p-2 ml-4 border border-gray-400 w-full md:w-80"
+              type="text"
+              placeholder="Task description"
+              maxLength="100"
+              value={this.state.descriptionValue}
+              onChange={this.handleDescriptionChange}
+            />
+          </div>
           <button className="bg-blue-500 text-white ml-2" onClick={this.createTodo}>
             Add
           </button>
