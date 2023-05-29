@@ -87,8 +87,9 @@ class TodosContainer extends Component {
   };
 
   updateTodo = (id, updatedData) => {
-    const isTaskDone = this.state.todos.find((todo) => todo.id === id)?.done;
-    if (isTaskDone) {
+    const editedTodo = this.state.todos.find((todo) => todo.id === id);
+  
+    if (editedTodo.done) {
       Swal.fire({
         icon: 'error',
         title: 'Cannot Edit',
@@ -115,6 +116,7 @@ class TodosContainer extends Component {
         console.log(error);
       });
   };
+  
   handleSaveClick = (id) => {
     const { editingTodoName, editingTodoDescription } = this.state;
     const updatedData = {
@@ -122,10 +124,18 @@ class TodosContainer extends Component {
       description: editingTodoDescription,
     };
   
-    const isTaskDone = this.state.todos.find((todo) => todo.id === id)?.done;
+    const editedTodo = this.state.todos.find((todo) => todo.id === id);
   
-    if (id && Object.keys(updatedData).length > 0 && !isTaskDone) {
-      this.updateTodo(id, updatedData);
+    if (id && Object.keys(updatedData).length > 0) {
+      if (editedTodo.done) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Cannot Edit',
+          text: 'This task is already marked as done and cannot be edited.',
+        });
+      } else {
+        this.updateTodo(id, updatedData);
+      }
     }
   };
   
