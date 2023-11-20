@@ -9,7 +9,6 @@ and delete todo items.
 ******
 ##Screenshot
 
-<img width="956" alt="Screenshot 2023-05-29 171732" src="https://github.com/JosephWamiti1178/Todo-Frontend/assets/91910681/ac9eba98-89bb-4c48-aafd-6c7002556efe">
 
 *****
 ## SetUp Instruction
